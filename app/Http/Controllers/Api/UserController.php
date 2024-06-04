@@ -78,9 +78,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->where('password',hash('sha256', $request->password, false))->first();
-
-        ray($user, hash('sha256', $request->password, false),$request->email);
-
+        
         if ($user) {
             return response()->json(['user_id' => $user->id, 'token' => base64_encode(hash('sha256', $user->remember_token)), 'is_admin' => $user->is_admin], 200);
         } else {
