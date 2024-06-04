@@ -8,9 +8,6 @@
 # criar .env
 $ cp .env.example .env
 
-# configurar resources/js/axios.js com url
-$ nano resources/js/axios.js
-
 # Instale as dependências
 $ npm install
 $ composer install
