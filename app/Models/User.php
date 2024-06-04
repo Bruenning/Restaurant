@@ -2,46 +2,70 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
-{
-    use HasFactory, Notifiable;
+class User extends Model 
+{ 
+    use  HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'user';
+
+    // The attributes that are mass assignable.
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'name',
+        'is_admin',
+        'remember_token'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // The attributes that should be hidden for arrays.
     protected $hidden = [
         'password',
         'remember_token',
+        'is_admin'
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+
+    // Get the user's reservations.
+
+    public function reservations()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Reservation::class);
     }
+
+    // Get the user's is_admin.
+    
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
+    // create a new user
+
+    public static function create(array $attributes = [])
+    {
+        $user = new User();
+        $user->email = $attributes['email'];
+        $user->password = $attributes['password'];
+        $user->name = $attributes['name'];
+        $user->remember_token = $attributes['remember_token'];
+        $user->is_admin = false;
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * scope
+     */
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('is_admin', true);
+    }
+
+
 }
