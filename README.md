@@ -21,5 +21,5 @@ $ php artisan key:generate
 #inicia o server
 $ php artisan server
 
-# Execute a aplicação em modo de desenvolvimento
+# Execute a aplicação
 $ npm run dev
