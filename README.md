@@ -12,7 +12,6 @@ $ cp .env.example .env
 $ npm install
 $ composer install
 
-
 # Execute as migrações
 $ php artisan migrate --seed
 
