@@ -8,7 +8,6 @@
 # criar .env
 $ cp .env.example .env
 
-# Instale as dependências
 $ npm install
 $ composer install
 
